@@ -1,17 +1,19 @@
-from RPS_game import play, mrugesh, abbey, quincy, kris, human, random_player
+from RPS_game import play, quincy, abbey, kris, mrugesh
 from RPS import player
-from unittest import main
+if __name__ == "__main__":
+    # Test against each bot
+    print("Testing against Quincy")
+    play(player, quincy, 1000, verbose=True)
+    
+    print("Testing against Abbey")
+    play(player, abbey, 1000, verbose=True)
+    
+    print("Testing against Kris")
+    play(player, kris, 1000, verbose=True)
+    
+    print("Testing against Mrugesh")
+    play(player, mrugesh, 1000, verbose=True)
 
-play(player, quincy, 1000)
-play(player, abbey, 1000)
-play(player, kris, 1000)
-play(player, mrugesh, 1000)
-
-# Uncomment line below to play interactively against a bot:
-# play(human, abbey, 20, verbose=True)
-
-# Uncomment line below to play against a bot that plays randomly:
-# play(human, random_player, 1000)
-
-# Uncomment line below to run unit tests automatically
-# main(module='test_module', exit=False)
+    # Run unit tests
+    # Uncomment the line below to run the unit tests
+    # import test_module; test_module.main()

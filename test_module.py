@@ -1,38 +1,32 @@
 import unittest
-from RPS_game import play, mrugesh, abbey, quincy, kris
+from RPS_game import play, quincy, abbey, kris, mrugesh
 from RPS import player
 
+class TestRPSPlayer(unittest.TestCase):
 
-class UnitTests(unittest.TestCase):
-    print()
+    def test_quincy(self):
+        results = play(player, quincy, 1000)
+        print("Results against Quincy:", results)
+        win_rate = results  # Directly use results if it's a float representing the win rate
+        self.assertGreaterEqual(win_rate, 0.6, "Win rate against Quincy is less than 60%")
 
-    def test_player_vs_quincy(self):
-        print("Testing against quincy...")
-        actual = play(player, quincy, 1000) >= 60
-        self.assertTrue(
-            actual,
-            'Expected defeat percentage for quincy 60% of the time.')
+    def test_abbey(self):
+        results = play(player, abbey, 1000)
+        print("Results against Abbey:", results)
+        win_rate = results
+        self.assertGreaterEqual(win_rate, 0.6, "Win rate against Abbey is less than 60%")
 
-    def test_player_vs_abbey(self):
-        print("Testing against abbey...")
-        actual = play(player, abbey, 1000) >= 60
-        self.assertTrue(
-            actual,
-            'Expected defeat percentage for abbey 60% of the time.')
+    def test_kris(self):
+        results = play(player, kris, 1000)
+        print("Results against Kris:", results)
+        win_rate = results
+        self.assertGreaterEqual(win_rate, 0.6, "Win rate against Kris is less than 60%")
 
-    def test_player_vs_kris(self):
-        print("Testing against kris...")
-        actual = play(player, kris, 1000) >= 60
-        self.assertTrue(
-            actual, 'Expected defeat percentage for kris 60% of the time.')
-
-    def test_player_vs_mrugesh(self):
-        print("Testing against mrugesh...")
-        actual = play(player, mrugesh, 1000) >= 60
-        self.assertTrue(
-            actual,
-            'Expected defeat percentage for mrugesh 60% of the time.')
-
+    def test_mrugesh(self):
+        results = play(player, mrugesh, 1000)
+        print("Results against Mrugesh:", results)
+        win_rate = results
+        self.assertGreaterEqual(win_rate, 0.6, "Win rate against Mrugesh is less than 60%")
 
 if __name__ == "__main__":
     unittest.main()

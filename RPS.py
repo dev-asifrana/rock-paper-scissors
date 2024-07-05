@@ -1,31 +1,48 @@
-from typing import Literal
-from random import choice
+import random
 
-Hand = Literal["R", "P", "S", ""]
-
-
-def player(prev_play: Hand, opponent_history: list[Hand] = []) -> Hand:
-    return ""
-
-
-def oneMemoryPlayer(prev_play: Hand, opponent_history: list[Hand] = []) -> Hand:
-    """
-    Try to beat before:
-    Scroes are: 50, 50, 84, 100
-    """
-    opponent_history.append(prev_play)
-    guess = opponent_history[-1]
-    return oppose(guess)
-
-
-def oppose(hand: Hand) -> Hand:
-    """ "
-    When given a hand, return the winning hand
-    """
-    if hand == "P":
-        return "S"
-    elif hand == "R":
-        return "P"
-    elif hand == "S":
-        return "R"
-    return choice(["R", "P", "S"])
+def player(prev_play, opponent_history=[]):
+    if prev_play:
+        opponent_history.append(prev_play)
+    
+    # Define strategies
+    def random_strategy():
+        return random.choice(['R', 'P', 'S'])
+    
+    def counter_strategy():
+        if not opponent_history:
+            return random_strategy()
+        counter_moves = {'R': 'P', 'P': 'S', 'S': 'R'}
+        return counter_moves[opponent_history[-1]]
+    
+    def frequency_strategy():
+        if not opponent_history:
+            return random_strategy()
+        move_count = {'R': 0, 'P': 0, 'S': 0}
+        for move in opponent_history:
+            move_count[move] += 1
+        most_common_move = max(move_count, key=move_count.get)
+        counter_moves = {'R': 'P', 'P': 'S', 'S': 'R'}
+        return counter_moves[most_common_move]
+    
+    def pattern_strategy():
+        if len(opponent_history) < 3:
+            return random_strategy()
+        pattern = ''.join(opponent_history[-3:])
+        if pattern == 'RRR':
+            return 'P'
+        elif pattern == 'PPP':
+            return 'S'
+        elif pattern == 'SSS':
+            return 'R'
+        else:
+            return random_strategy()
+    
+    # Select and apply a strategy
+    if len(opponent_history) < 100:
+        return random_strategy()
+    elif len(opponent_history) < 200:
+        return counter_strategy()
+    elif len(opponent_history) < 300:
+        return frequency_strategy()
+    else:
+        return pattern_strategy()
